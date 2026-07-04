@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --font-serif: var(--app-font-serif);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Dark mode base */
+  --background: 0 0% 6%;
+  --foreground: 0 0% 95%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 237 100% 52%;
+
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 95%;
+  --card-border: 0 0% 14%;
+
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 95%;
+  --popover-border: 0 0% 14%;
+
+  --primary: 237 100% 52%;       /* Electric Blue #1500FF */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 92%;         /* Off-white for cards */
+  --secondary-foreground: 0 0% 6%;
+
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 50%;
+
+  --accent: 237 100% 52%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --app-font-sans: 'Noto Sans SC', 'Space Grotesk', sans-serif;
+  --app-font-mono: 'Space Mono', monospace;
+  --app-font-serif: 'Playfair Display', serif;
+
+  --radius: 0rem;
+
+  /* Electric blue */
+  --blue: #1500ff;
+}
+
+.dark {
+  --background: 0 0% 6%;
+  --foreground: 0 0% 95%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply font-sans antialiased;
+    background-color: #0e0e0e;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='600'%3E%3Cpath d='M-100 120 C200 80 400 160 700 120 C1000 80 1200 160 1600 120' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3Cpath d='M-100 200 C200 160 400 240 700 200 C1000 160 1200 240 1600 200' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3Cpath d='M-100 280 C200 240 400 320 700 280 C1000 240 1200 320 1600 280' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3Cpath d='M-100 360 C200 320 400 400 700 360 C1000 320 1200 400 1600 360' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3Cpath d='M-100 440 C200 400 400 480 700 440 C1000 400 1200 480 1600 440' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3Cpath d='M-100 520 C200 480 400 560 700 520 C1000 480 1200 560 1600 520' stroke='rgba(255,255,255,0.025)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    min-height: 100vh;
+  }
+}
+
+/* ─── Ticket card ─────────────────────────────── */
+.ticket-card {
+  background: #f2f0ed;
+  color: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-card-inner {
+  background: #f7f5f2;
+  color: #0a0a0a;
+  border: 1px solid rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Perforated edge — right side */
+.perf-right::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  border-left: 1px dashed rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Dotted separator */
+.dot-sep {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+}
+.dot-sep::after {
+  content: '· · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · ·';
+  font-family: var(--app-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: rgba(0,0,0,0.20);
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Blue dot accent */
+.blue-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1500ff;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.blue-dot-lg {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1500ff;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Tab buttons */
+.tab-btn {
+  font-family: var(--app-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border: 1px solid rgba(0,0,0,0.16);
+  transition: all 0.18s ease;
+  color: rgba(0,0,0,0.50);
+  background: transparent;
+  position: relative;
+}
+
+.tab-btn.active {
+  background: #0a0a0a;
+  color: #f2f0ed;
+  border-color: #0a0a0a;
+}
+
+.tab-btn:not(.active):hover {
+  color: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.06);
+}
+
+/* Section label */
+.section-label {
+  font-family: var(--app-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.42);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Tag chip */
+.tag-chip {
+  font-family: var(--app-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.04);
+  display: inline-block;
+}
+
+.tag-chip-blue {
+  border-color: rgba(21,0,255,0.28);
+  color: rgba(21,0,255,0.80);
+  background: rgba(21,0,255,0.06);
+}
+
+/* Status badge */
+.status-pill {
+  font-family: var(--app-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border: 1px solid currentColor;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-pill::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0e0e0e; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+::-webkit-scrollbar-thumb:hover { background: rgba(21,0,255,0.5); }
+
+/* Timeline */
+.timeline-line { border-left: 1px solid rgba(0,0,0,0.12); }
+
+/* ─── Keyframes ─────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes count-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade-up {
+  animation: fade-up 0.4s ease both;
+}
+.anim-delay-1 { animation-delay: 0.08s; }
+.anim-delay-2 { animation-delay: 0.16s; }
+.anim-delay-3 { animation-delay: 0.24s; }
+.anim-delay-4 { animation-delay: 0.32s; }
+
+/* Hover lift on dark cards */
+.hover-lift {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}

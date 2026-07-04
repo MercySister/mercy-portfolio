@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: stats
+    description: Site statistics
+  - name: messages
+    description: Visitor messages
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [stats]
+      summary: Get site stats
+      description: Returns current visitor count and like count
+      responses:
+        "200":
+          description: Stats retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
+
+  /visitors:
+    post:
+      operationId: recordVisit
+      tags: [stats]
+      summary: Record a visit
+      description: Increments visitor count and returns updated stats
+      responses:
+        "200":
+          description: Visit recorded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
+
+  /likes:
+    post:
+      operationId: addLike
+      tags: [stats]
+      summary: Add a like
+      description: Increments like count and returns updated stats
+      responses:
+        "200":
+          description: Like added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
+
+  /messages:
+    post:
+      operationId: createMessage
+      tags: [messages]
+      summary: Submit a message
+      description: Saves a visitor message and sends email notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMessageBody"
+      responses:
+        "201":
+          description: Message created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "400":
+          description: Invalid input
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    SiteStats:
+      type: object
+      properties:
+        visitorCount:
+          type: integer
+        likeCount:
+          type: integer
+      required:
+        - visitorCount
+        - likeCount
+
+    CreateMessageBody:
+      type: object
+      properties:
+        name:
+          type: string
+        content:
+          type: string
+      required:
+        - name
+        - content
+
+    MessageResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - content
+        - createdAt
